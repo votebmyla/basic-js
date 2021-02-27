@@ -34,7 +34,7 @@ class VigenereCipheringMachine {
     key = key.toUpperCase();
     
     if(key.length < message.length){
-      for(let i = 0; i <= message.length; i++){
+      for(let i = 0; i < message.length; i++){
       
         k = k + key[i % key.length];
       }
@@ -58,11 +58,33 @@ class VigenereCipheringMachine {
       }
     }  
     return (res.slice(0, res.length-count));
-  }  
-  decrypt() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+  }
+  
+  decrypt(encrypt, key) {
+    try{
+      if(encrypt == undefined || key == undefined){
+        throw new Error('message or key not defined');
+      }
+      key = this.keyHandler(encrypt, key);
+      let decryptMessage = '';
+      for(let i = 0; i < encrypt.length; i++){
+        if(encrypt[i].charCodeAt(0) >= 65 && encrypt[i].charCodeAt(0) <= 90){
+          let decryptLetter = String.fromCharCode(((encrypt[i].charCodeAt(0)-key[i].charCodeAt(0))+26)%26+65);
+          decryptMessage = decryptMessage + decryptLetter;
+        } else {
+          decryptMessage = decryptMessage + encrypt[i];
+        }
+      }
+      if(this.direct == false){
+        return decryptMessage.split('').reverse().join('');
+      } else{
+        return decryptMessage;
+      }
+    } catch(error){
+      throw error.name;
+    }
   }
 }
+
 
 module.exports = VigenereCipheringMachine;
