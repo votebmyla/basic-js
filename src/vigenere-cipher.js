@@ -21,7 +21,12 @@ class VigenereCipheringMachine {
           encryptMessage = encryptMessage + message[i];
         }
       }
-      return encryptMessage;
+      if(this.direct == false){
+        return encryptMessage.split('').reverse().join('');
+      } else{
+        return encryptMessage;
+
+      }
     } catch(error){
       throw error.message;
     }
