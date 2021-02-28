@@ -2,10 +2,10 @@ const CustomError = require("../extensions/custom-error");
 
 module.exports = function repeater(str, options) {
   str = String(str);
-  
+   
   let separator;
   if(options.separator == undefined){
-    separator = options.separator;
+    separator = '+';
   }else{
     separator = String(options.separator);
   }
@@ -24,7 +24,12 @@ module.exports = function repeater(str, options) {
     addition = String(options.addition);
   }
     
-  let additionSeparator = String(options.additionSeparator);
+  let additionSeparator;
+  if(options.additionSeparator == undefined){
+    additionSeparator = '|';
+  }else{
+    additionSeparator = String(options.additionSeparator); 
+  }
   
   let additionRepeatTimes;
   if(options.additionRepeatTimes == undefined){
@@ -34,13 +39,13 @@ module.exports = function repeater(str, options) {
   }
   
   
-  function additionHandler(addition='', additionSeparator = '|', additionRepeatTimes = 1){
+  function additionHandler(addition='', additionSeparator, additionRepeatTimes = 1){
     let res = (addition + additionSeparator).repeat(additionRepeatTimes);
     let finalResult = res.slice(0, -(additionSeparator.length));
     return finalResult;
   }
   
-  function strHandler(str, separator = '+', repeatTimes = 1){
+  function strHandler(str, separator, repeatTimes = 1){
     let res = (str+additionHandle+separator).repeat(repeatTimes);
     let finalResult = res.slice(0, -(separator.length));
     return finalResult;
